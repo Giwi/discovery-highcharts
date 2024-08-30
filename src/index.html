@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <!-- Import Discovery -->
+    <script nomodule src="https://unpkg.com/@senx/discovery-widgets/dist/discovery/discovery.js"></script>
+    <script type="module" src="https://unpkg.com/@senx/discovery-widgets/dist/discovery/discovery.esm.js"></script>
+
+    <script type="module" src="/build/kwh50-discovery-highcharts.esm.js"></script>
+    <script nomodule src="/build/kwh50-discovery-highcharts.js"></script>
+  </head>
+  <body>
+    <discovery-dashboard url="https://warpcloud.senx.io/api/v0/exec" dashboard-title="Test" debug="true">
+{
+    'title' 'Test'
+    'description' 'Dashboard test'
+    'tiles' [
+        {
+            'title' 'test'
+            'x' 0 'y' 0 'w' 12 'h' 2
+            'type' 'kwh50-line'
+            'macro' <%
+                'p31WRDGPUHGb3pE5Qs.nfe7y0OoeweLiA3TZU7V_wPyvdpE_MHEGbuu3YwQvXcZmWFblAeOI2k3k5fsXtWu3rlvxjUeai5Iled7hyOsaw1qTD38.7Y6O9f1Z6fNe90wI2.lesYxRO6CtMyZ.cIsTdg.tk2aKD9_zo39aT8T5cOl6ULYXL9nuTSyU02wp7klGeFZYB0Ee83bieJiTamsdNq43sEWHkvNRj56qvTkWz0T35YEBhu28Cmr1xZHW7HILrzKNMYwOMmITdY0WLknPASX185sfaY_o'
+                'token' STORE
+
+                {
+                    'token' $token
+                    'class' 'electricity'
+                    'labels' { 'sensorId' '~30002142313180.*' }
+                    'start' '1711933200000000'
+                    'end' '1711936800000000'
+                } FETCH
+                'gts' STORE
+
+                [
+                    $gts
+                    bucketizer.mean
+                    0
+                    1 s
+                    0
+                ] BUCKETIZE
+                INTERPOLATE
+                UNBUCKETIZE
+                0.001 TIMESCALE
+                SORT
+                'data' STORE
+
+                {
+                  'data' $data
+                }
+            %>
+        }
+    ]
+}
+      </discovery-dashboard>
+  </body>
+</html>
