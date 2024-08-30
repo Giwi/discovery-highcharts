@@ -136,12 +136,13 @@ export class Kwh50Line {
         {
           type: 'line',
           name: 'My serie',
-          data: [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 4}],
+          //Highcharts accepte des datas de la forme : [timestamp, number][] ou {x: timestamp, y: number}[]
+          data: gtsList[0].v,
         },
       ],
     });
 
-    this.myChart.redraw();
+    //this.myChart.redraw();
   }
 
   /************************************************************
